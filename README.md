@@ -1,2 +1,2 @@
-# Checkers
-Implementation of a Checkers game 
+# Main
+Implementation of a Main game 
