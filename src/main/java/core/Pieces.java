@@ -8,6 +8,24 @@ public enum  Pieces{
     Empty,
     Boarder;
 
+
+    public Color getColor(){
+
+        switch (this){
+            case DameB:
+            case PawnB:
+                return Color.Black;
+
+            case DameW:
+            case PawnW:
+                return Color.White;
+            default:
+                return Color.Empty;
+
+        }
+
+    }
+
     public String getUnicode(){
     switch(this){
         case DameB:

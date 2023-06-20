@@ -5,6 +5,12 @@ package model;
 import core.Pieces;
 
 public class Board {
+
+    /**
+     * Implementation of the Board as an array
+     *
+     * @author Nadine Huetter
+     */
     private Pieces[] board = new Pieces[10*10];
 
     public Pieces getPiece(int i){
@@ -16,6 +22,11 @@ public class Board {
 
 
     public void initializeBoard(){
+        /**
+         * Sets up the starting Position of the stones and marks the border
+         *
+         * @author Nadine Huetter
+         */
 
         for(int i = 0; i<100; i++ ){
 
@@ -39,7 +50,9 @@ public class Board {
 
     public void printBoard(){
         /**
-         * Method to Print the current board
+         * Method to Print the current board utilizing Unicode
+         *
+         * @author Nadine Huetter
          */
         for(int i = 0; i<10 ;i++){
             for (int j = 0; j<10; j++){

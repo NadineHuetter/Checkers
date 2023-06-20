@@ -11,16 +11,15 @@ import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args){
-
+        /**
+         * the main-funktion combines all other classes and gives the possebilety
+         * to play several playthroughs without restarting the application
+         *
+         * @author Nadine Huetter
+         */
+        System.out.println(Pieces.DameB.getUnicode()+Pieces.DameW.getUnicode());
         Game game = chooseGamemode();
-
-        Board newboard = new Board();
-        newboard.initializeBoard();
-        newboard.printBoard();
-        System.out.print(Pieces.DameW.getUnicode()+ Pieces.DameB.getUnicode());
-
         boolean whiteWon= game.playGame();
-
         if (whiteWon){
             System.out.println("White won!");
         } else {
@@ -28,13 +27,22 @@ public class Main {
         }
 
 
+        /**
+         * loop implementation
+         * @author Nadine Huetter
+         */
+        // System.out.println("Do you want to play an other round?(y/n)");
+       // String input = Readinput();
+        //if (input == "y" || input =="Y"){
+
+        //}
+
     }
 
     public static String Readinput(){
         /**
          * Reads the console input
          */
-        // liest einen vom Benutzer eingegebenen Text (String) ein
         BufferedReader keyboard =
                 new BufferedReader( new InputStreamReader(System.in));
         try {
