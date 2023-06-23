@@ -11,7 +11,7 @@ public class ComPlayer extends Player {
     }
 
     @Override
-    public String move() {
-        return super.move();
+    public Board move(Board board, Player opponent) {
+        return null;
     }
 }

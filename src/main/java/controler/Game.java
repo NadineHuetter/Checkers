@@ -10,7 +10,7 @@ public class Game {
      *
      * @author Nadine Huetter
      */
-    private final Board board ;
+    private Board board ;
     private final Player player1;
     private final Player player2;
     private int currentPlayer;
@@ -36,14 +36,15 @@ public class Game {
         this.board.initializeBoard();
         Player winner= this.player1;
 
-        while(!isOver){ //this.isOver gets changed in the method isOver
+        while(!this.isOver){ //this.isOver gets changed in the method isOver
             if(currentPlayer==1) {
                 this.board.printBoard();
-                player1.move();
+               Board tempBoard = player1.move(this.board, player2);
+               this.board= tempBoard;
                 currentPlayer=2;
             }else{
                 this.board.printBoard();
-                player2.move();
+                player2.move(this.board, player1);
                 currentPlayer=1;
             }
             winner=isOver();

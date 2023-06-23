@@ -2,7 +2,9 @@ import controler.Game;
 import core.Pieces;
 import model.Board;
 //import model.ComPlayer;
+import model.ComPlayer;
 import model.Player;
+import model.UserPlayer;
 //import model.UserPlayer;
 
 import java.io.BufferedReader;
@@ -67,24 +69,26 @@ public class Main {
 
         String input = Readinput();
         Board board = new Board();
+        Player player1;
+        Player player2;
         Game game;
         switch (input) {
             case "0":
-                Player player10 =new Player(true); //new UserPlayer();
-                Player player20 =new Player(false); //new UserPlayer();
+                player1 =new UserPlayer(true);
+                player2 =new UserPlayer(false);
 
-                game= new Game(board,player10,player20);
+                game= new Game(board,player1,player2);
                 return game;
             case "1":
-                Player player11 = new Player(true);//new UserPlayer();
-                Player player21 = new Player(false);//new ComPlayer();
+                player1 =new UserPlayer(true);
+                player2 =new ComPlayer(false);
 
-                game= new Game(board,player11,player21);
+                game= new Game(board,player1,player2);
                 return game;
             case"2":
-                Player player12 = new Player(true);//new ComPlayer();
-                Player player22 = new Player(false); //new ComPlayer();
-                game= new Game(board,player12,player22);
+                player1 =new ComPlayer(true);
+                player2 =new ComPlayer(false);
+                game= new Game(board,player1,player2);
 
                 return game;
             default:

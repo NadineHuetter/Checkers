@@ -33,9 +33,9 @@ public enum  Pieces{
         case DameW:
             return" \u2654 ";
         case PawnB:
-            return" \u26ab ";
-        case PawnW:
             return" \u26aa ";
+        case PawnW:
+            return" \u26ab ";
 
         case Boarder:
             return" \u2613 ";

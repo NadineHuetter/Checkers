@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class Player {
+public abstract class Player {
     /**
      * abstract class representing the Player
      *
@@ -17,8 +17,8 @@ public class Player {
      *
      */
 
-    int amountOfPieces;
-    boolean white; //decides If the Player Plays the white or the Black Pieces
+    private int amountOfPieces;
+    private boolean white; //decides If the Player Plays the white or the Black Pieces
 
     public Player(boolean white) {
         this.amountOfPieces=12;
@@ -115,7 +115,6 @@ public class Player {
                                     Move tempMove =new Move();
                                     tempMove.addMove(this, i*10+j,i * 10 + j + Direction.NorthWest.getMovement(),0 );
                                     possibleMoves.add(tempMove);
-
                                 }
 
                                 if(board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()) == Pieces.Empty){
@@ -131,6 +130,7 @@ public class Player {
                                 Move tempMoveNE = new Move();
                                 Move tempMoveSW = new Move();
                                 Move tempMoveSE = new Move();
+
                                 while (board.getPiece(i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveNW.addMove(this,i * 10 + j +Direction.NorthWest.getMovement()*amountOfMovesNW,i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW,0);
@@ -148,7 +148,9 @@ public class Player {
                                     tempMoveSW.addMove(this,i * 10 + j +Direction.SouthWest.getMovement()*amountOfMovesNW,i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSW);
 
-                                }while (board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
+                                }
+
+                                while (board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveSE.addMove(this,i * 10 + j +Direction.SouthEast.getMovement()*amountOfMovesNW,i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSE);
@@ -190,18 +192,19 @@ public class Player {
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
-                                    tempMoveNE.addMove(this,i * 10 + j +Direction.NorthEast.getMovement()*amountOfMovesNW,i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW,0);
+                                    tempMoveNE.addMove(this,i * 10 + j +Direction.NorthEast.getMovement()*amountOfMovesNE,i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveNE);
 
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW) != Pieces.Boarder){
-                                    tempMoveSW.addMove(this,i * 10 + j +Direction.SouthWest.getMovement()*amountOfMovesNW,i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW,0);
+                                    tempMoveSW.addMove(this,i * 10 + j +Direction.SouthWest.getMovement()*amountOfMovesSW,i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSW);
 
-                                }while (board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
+                                }
+                                while (board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
-                                    tempMoveSE.addMove(this,i * 10 + j +Direction.SouthEast.getMovement()*amountOfMovesNW,i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW,0);
+                                    tempMoveSE.addMove(this,i * 10 + j +Direction.SouthEast.getMovement()*amountOfMovesSE,i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSE);
 
                                 }
@@ -219,17 +222,7 @@ public class Player {
         return possibleMoves;
     };
 
-    public String move() {
-        /**
-         * the actual move of the player
-         * returns a string informing the log what just happened
-         *
-         * @author Nadine Huetter
-         */
-        return "";
-
-    }
 
 
-
-    }
+    public abstract Board move(Board board, Player opponent);
+}
