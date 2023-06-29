@@ -36,7 +36,6 @@ public class UserPlayer extends Player{
             int[] tempMovement = chosenMove.getMove(i);
 
             board.setPiece(tempMovement[1], Pieces.Empty);
-            System.out.println(tempMovement);
             board.setPiece(tempMovement[2],usedPiece);
             if(tempMovement[3] != 0){
                 board.setPiece(tempMovement[3],Pieces.Empty);
