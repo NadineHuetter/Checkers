@@ -26,6 +26,21 @@ public enum  Pieces{
 
     }
 
+    public Kind getKind(){
+        switch (this){
+            case DameB:
+            case DameW:
+                return Kind.Dame;
+
+            case PawnB:
+            case PawnW:
+                return Kind.Pawn;
+            default:
+                return Kind.Empty;
+
+        }
+    }
+
     public String getUnicode(){
     switch(this){
         case DameB:

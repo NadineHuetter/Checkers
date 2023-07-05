@@ -40,11 +40,14 @@ public class Game {
             if(currentPlayer==1) {
                 this.board.printBoard();
                Board tempBoard = player1.move(this.board, player2);
-               this.board= tempBoard;
+               Board tempBoard2 = player1.becomeDame(tempBoard);
+               this.board= tempBoard2;
                 currentPlayer=2;
             }else{
                 this.board.printBoard();
-                player2.move(this.board, player1);
+                Board tempBoard = player2.move(this.board, player1);
+                Board tempBoard2 = player2.becomeDame(tempBoard);
+                this.board= tempBoard2;
                 currentPlayer=1;
             }
             winner=isOver();

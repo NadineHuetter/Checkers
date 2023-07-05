@@ -1,9 +1,6 @@
 package model;
 
-import core.Color;
-import core.Direction;
-import core.Move;
-import core.Pieces;
+import core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,21 +38,79 @@ public abstract class Player {
         this.white = white;
     }
 
-    public List<Move> getjumpPossibilitys(int i, Board board){
+    public Move getjumpPossibilitys(int i, Board board){
         /**
          * test if one Piece can jump an opponents Piece
          *
+         * it's Impossible for a Piece on the board to have two ways to jump because per turn only one way can open up,
+         * and you are forced to immediately jump your opponents pieces if possible
+         *
          * @author Nadine Huetter
          */
-        List<Move> jumpPossibilitys = new ArrayList<>();
-
+        Move jumpPossibilitys = new Move();
         Pieces currentPiece = board.getPiece(i);
+        int currentPlace =i;
 
+
+        if (currentPiece.getKind() == Kind.Pawn){
+
+            if(jumpPossibilitys.getNumberOfMoves()== 0){
+                if(this.isWhite()){
+                    if(jump(currentPlace,board,Direction.NorthEast)){
+                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
+                        currentPlace=currentPlace+2*Direction.NorthEast.getMovement();
+                    }
+                    else if(jump(currentPlace,board,Direction.NorthWest)){
+                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
+                        currentPlace=currentPlace+2*Direction.NorthWest.getMovement();
+                    }
+
+                }else{
+                    if(jump(currentPlace,board,Direction.SouthEast)){
+                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
+                        currentPlace=currentPlace+2*Direction.SouthEast.getMovement();
+                    }
+                    else if(jump(currentPlace,board,Direction.SouthWest)){
+                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
+                        currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
+                    }
+
+                }
+
+            }else {
+                if(jump(currentPlace,board,Direction.NorthEast)){
+                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
+                    currentPlace=currentPlace+2*Direction.NorthEast.getMovement();
+                }
+                else if(jump(currentPlace,board,Direction.NorthWest)){
+                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
+                    currentPlace=currentPlace+2*Direction.NorthWest.getMovement();
+                }
+                else if(jump(currentPlace,board,Direction.SouthEast)){
+                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
+                    currentPlace=currentPlace+2*Direction.SouthEast.getMovement();
+                }
+                else if(jump(currentPlace,board,Direction.SouthWest)){
+                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
+                    currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
+                }
+            }
+
+        }
+        else {//TestDame
+
+
+        }
         return jumpPossibilitys;
     } //TODO : Write
 
     public boolean jump(int i,Board board, Direction direction){
-        if( board.getPiece(i + direction.getMovement()).getColor() == Color.Black && board.getPiece(i+2* direction.getMovement()) == Pieces.Empty) {
+
+        if(this.isWhite()) {
+            if (board.getPiece(i + direction.getMovement()).getColor() == Color.Black && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty) {
+                return true;
+            }
+        }else if (board.getPiece(i + direction.getMovement()).getColor() == Color.White && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty) {
             return true;
         }
         return false;
@@ -78,18 +133,24 @@ public abstract class Player {
                 else {
                     if (this.isWhite()) {
                         if(currentPiece.getColor() == Color.Black){// white can't move black Pieces
-                        } else if (currentPiece == Pieces.PawnW) { //pawns can only jump direct neightbors
-
-                        } else{ //jump movement of the Dame
+                        }
+                        else {
+                            Move tempMove = getjumpPossibilitys(i*10+j,board);
+                            if(tempMove.getNumberOfMoves() != 0){
+                                possibleMoves.add(tempMove);
+                            }
 
                         }
 
                     } else {
                         if(currentPiece.getColor() == Color.White){
                           ; // black can't move white Pieces
-                        } else if (currentPiece == Pieces.PawnB) { //pawns can only jump direct neightbors
-
-                        } else{ //jump movement of the Dame
+                        }
+                        else{ //jump movement of the Dame
+                            Move tempMove = getjumpPossibilitys(i*10+j,board);
+                            if(tempMove.getNumberOfMoves() != 0){
+                                possibleMoves.add(tempMove);
+                            }
 
                         }
                     }
@@ -178,7 +239,7 @@ public abstract class Player {
 
                                 }
 
-                            } else{ //jump movement of the Dame
+                            } else{ //movement of the Dame
                                 int amountOfMovesNW = 0, amountOfMovesNE =0, amountOfMovesSW=0 ,amountOfMovesSE = 0;
                                 Move tempMoveNW = new Move();
                                 Move tempMoveNE = new Move();
@@ -221,6 +282,39 @@ public abstract class Player {
 
         return possibleMoves;
     };
+
+
+    public Board becomeDame (Board board){
+        int startingField = 0;
+        if(this.isWhite()){
+            startingField = 11;
+        }else{
+            startingField = 92;
+        }
+
+
+        for(int i =0 ; i<4 ;i++){
+            if(this.isWhite()){
+                if(board.getPiece(startingField)== Pieces.PawnW){
+                    board.setPiece(startingField,Pieces.DameW);
+
+
+                }
+
+
+            }else{
+                if(board.getPiece(startingField)== Pieces.PawnB){
+                    board.setPiece(startingField,Pieces.DameB);
+                }
+            }
+            System.out.println(startingField);
+            startingField += 2;
+
+        }
+        return board;
+    }
+
+
 
 
 

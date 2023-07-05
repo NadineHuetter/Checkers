@@ -32,7 +32,7 @@ public class UserPlayer extends Player{
         int[] firstMovement = chosenMove.getMove(0);
         Pieces usedPiece = board.getPiece(firstMovement[1]);
 
-        for (int i = 0 ; i <= numOfSteps+1; i++) {
+        for (int i = 0 ; i <= numOfSteps; i++) {
             int[] tempMovement = chosenMove.getMove(i);
 
             board.setPiece(tempMovement[1], Pieces.Empty);
@@ -43,6 +43,8 @@ public class UserPlayer extends Player{
             }
 
         }
+
+        board = this.becomeDame(board);
 
         return board;
     }

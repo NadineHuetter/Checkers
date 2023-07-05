@@ -34,6 +34,7 @@ public class Move {
             sb.append( "black;"+ startPosition+ ";"+ endPositiion + ";"+ jumpedStone);
         }
         this.move += sb.toString();
+        this.numberOfMoves+=1;
         return null;
     }
 
@@ -50,6 +51,7 @@ public class Move {
         int[] move = new int[4];
         String[] elements = this.move.split(";");
         System.out.println(elements.length);
+        System.out.println(step);
 
         if (elements[step*4 + 0]== "white"){
             move[0]= 1; //white is true

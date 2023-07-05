@@ -5,3 +5,5 @@ public enum Color {
     White,
     Empty;
 }
+
+
