@@ -2,6 +2,12 @@ package core;
 
 import model.Player;
 
+/**
+ * class Representing a single Move
+ *
+ * @author Nadine Huetter
+ */
+
 public class Move {
    private String move ;
    private int numberOfMoves;
@@ -25,6 +31,11 @@ public class Move {
     }
 
     public Move addMove(Player player, int startPosition , int endPositiion, int jumpedStone){
+        /**
+         * Method to add a step to the Move, using a StringBuilder
+         *
+         * @author Nadine Huetter
+         */
         StringBuilder sb = new StringBuilder();
 
         if(player.isWhite()){
@@ -46,6 +57,8 @@ public class Move {
          * second is startpoint
          * third is endmove
          * last gives position of Jumped stone
+         *
+         * @author Nadine Huetter
          *
          */
         int[] move = new int[4];

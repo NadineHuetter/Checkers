@@ -1,5 +1,7 @@
 package model;
 
+import controler.Reader;
+
 public class ComPlayer extends Player {
     /**
      * class representing the Computer as a Player
@@ -11,7 +13,8 @@ public class ComPlayer extends Player {
     }
 
     @Override
-    public Board move(Board board, Player opponent) {
-        return null;
+    public Integer chooseMove(int numOfMoves){
+        return 0;
     }
+
 }

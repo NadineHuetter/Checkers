@@ -18,7 +18,7 @@ public class UserPlayer extends Player{
         super(white);
     }
 
-    @Override
+
     public Board move(Board board, Player opponent) {  //TODO:change board to pointer
         List<Move> possibleMoves = getPossibleMoves(board);
         int numOfMoves = possibleMoves.size();
@@ -49,6 +49,7 @@ public class UserPlayer extends Player{
         return board;
     }
 
+    @Override
     public Integer chooseMove(int numOfMoves){
 
         int choosenMoveNum = -1;

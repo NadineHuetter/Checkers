@@ -1,5 +1,9 @@
 package core;
 
+/**
+ * Enum to represent the Board Pieces and the Boarder
+ * @author Nadine Huetter
+ */
 public enum  Pieces{
     DameB,
     DameW,
@@ -10,6 +14,10 @@ public enum  Pieces{
 
 
     public Color getColor(){
+        /**
+         * Method to define the color of the Piece
+         * @author Nadine Huetter
+         */
 
         switch (this){
             case DameB:
@@ -27,6 +35,10 @@ public enum  Pieces{
     }
 
     public Kind getKind(){
+        /**
+         * Method to define the Kind of the Piece
+         * @author Nadine Huetter
+         */
         switch (this){
             case DameB:
             case DameW:
@@ -42,21 +54,26 @@ public enum  Pieces{
     }
 
     public String getUnicode(){
-    switch(this){
-        case DameB:
-            return" \u265a ";
-        case DameW:
-            return" \u2654 ";
-        case PawnB:
-            return" \u26aa ";
-        case PawnW:
-            return" \u26ab ";
 
-        case Boarder:
-            return" \u2613 ";
-        default:
-            return "   ";
+        /**
+         * Method to define the Unicode of the Piece used to Print the Board into the console
+         * @author Nadine Huetter
+         */
+        switch(this){
+            case DameB:
+                return" \u265a ";
+            case DameW:
+                return" \u2654 ";
+            case PawnB:
+                return" \u26aa ";
+            case PawnW:
+                return" \u26ab ";
 
-    }
+            case Boarder:
+                return" \u2613 ";
+            default:
+                return "   ";
+
+        }
     }
 }

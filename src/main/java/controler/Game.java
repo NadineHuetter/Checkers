@@ -6,7 +6,7 @@ import model.Player;
 public class Game {
 
     /**
-     * class to implement a single game including a game Log
+     * class to implement a single game
      *
      * @author Nadine Huetter
      */

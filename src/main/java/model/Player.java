@@ -38,7 +38,7 @@ public abstract class Player {
         this.white = white;
     }
 
-    public Move getjumpPossibilitys(int i, Board board){
+    public List<Move> getjumpPossibilitys(int i, Board board){
         /**
          * test if one Piece can jump an opponents Piece
          *
@@ -48,6 +48,7 @@ public abstract class Player {
          * @author Nadine Huetter
          */
         Move jumpPossibilitys = new Move();
+        List<Move> allPossibilitys = new ArrayList<>();
         Pieces currentPiece = board.getPiece(i);
         int currentPlace =i;
 
@@ -95,14 +96,36 @@ public abstract class Player {
                     currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
                 }
             }
+            
+            allPossibilitys.add(jumpPossibilitys);
 
         }
         else {//TestDame
-
-
+            if(testDame(i,board,Direction.NorthEast) != 0){
+                Move tempMove =new Move();
+                tempMove.addMove(this,i,testDame(i,board,Direction.NorthEast)+Direction.NorthEast.getMovement(),testDame(i,board,Direction.NorthEast));
+                allPossibilitys.add(tempMove);
+            }
+            if(testDame(i,board,Direction.NorthWest) != 0){
+                Move tempMove =new Move();
+                tempMove.addMove(this,i,testDame(i,board,Direction.NorthWest)+Direction.NorthWest.getMovement(),testDame(i,board,Direction.NorthWest));
+                allPossibilitys.add(tempMove);
+                
+            }
+            if(testDame(i,board,Direction.SouthEast) != 0){
+                Move tempMove =new Move();
+                tempMove.addMove(this,i,testDame(i,board,Direction.SouthEast)+Direction.SouthEast.getMovement(),testDame(i,board,Direction.SouthEast));
+                allPossibilitys.add(tempMove);
+            }
+            if(testDame(i,board,Direction.SouthWest) != 0){
+                Move tempMove =new Move();
+                tempMove.addMove(this,i,testDame(i,board,Direction.SouthWest)+Direction.SouthWest.getMovement(),testDame(i,board,Direction.SouthWest));
+                allPossibilitys.add(tempMove);
+            }
+            
         }
-        return jumpPossibilitys;
-    } //TODO : Write
+        return allPossibilitys;
+    } 
 
     public boolean jump(int i,Board board, Direction direction){
 
@@ -114,6 +137,32 @@ public abstract class Player {
             return true;
         }
         return false;
+    }
+    
+    public int testDame(int i, Board board,Direction direction){
+        int positionOfJumpedStone=0;
+        int n =1;
+        while (board.getPiece(i+n*direction.getMovement()) != Pieces.Boarder){
+            if(this.isWhite()) {
+                    if(board.getPiece(i+n*direction.getMovement()).getColor() == Color.Black && 
+                            board.getPiece(i+(n+1)*direction.getMovement()) == Pieces.Empty ){
+                        positionOfJumpedStone = i+n*direction.getMovement();
+                        return positionOfJumpedStone; 
+                    }
+                   
+            }else{
+                if(board.getPiece(i+n*direction.getMovement()).getColor() == Color.White &&
+                        board.getPiece(i+(n+1)*direction.getMovement()) == Pieces.Empty ){
+                    positionOfJumpedStone = i+n*direction.getMovement();
+                    return positionOfJumpedStone;
+
+                }
+            }
+            n +=1; 
+           
+        }
+
+        return positionOfJumpedStone;
     }
 
 
@@ -135,10 +184,15 @@ public abstract class Player {
                         if(currentPiece.getColor() == Color.Black){// white can't move black Pieces
                         }
                         else {
-                            Move tempMove = getjumpPossibilitys(i*10+j,board);
-                            if(tempMove.getNumberOfMoves() != 0){
-                                possibleMoves.add(tempMove);
+                            List<Move> tempMove = getjumpPossibilitys(i*10+j,board);
+                            for (Move move: tempMove
+                                 ) {if(move.getNumberOfMoves() != 0){
+                                possibleMoves.add(move);
                             }
+                                
+                            }
+                            
+
 
                         }
 
@@ -147,9 +201,12 @@ public abstract class Player {
                           ; // black can't move white Pieces
                         }
                         else{ //jump movement of the Dame
-                            Move tempMove = getjumpPossibilitys(i*10+j,board);
-                            if(tempMove.getNumberOfMoves() != 0){
-                                possibleMoves.add(tempMove);
+                            List<Move> tempMove = getjumpPossibilitys(i*10+j,board);
+                            for (Move move: tempMove
+                            ) {if(move.getNumberOfMoves() != 0){
+                                possibleMoves.add(move);
+                            }
+
                             }
 
                         }
@@ -314,9 +371,36 @@ public abstract class Player {
         return board;
     }
 
+    public Board move(Board board, Player opponent) {  //TODO:change board to pointer
+        List<Move> possibleMoves = getPossibleMoves(board);
+        int numOfMoves = possibleMoves.size();
+        for (int i = 0; i < numOfMoves; i++) {
+            System.out.println("("+i+")"+possibleMoves.get(i).getMove());
+        }
+        int chosenMoveNum=chooseMove(numOfMoves);
+
+        Move chosenMove = possibleMoves.get(chosenMoveNum);
+        int numOfSteps = chosenMove.getNumberOfMoves() -1;
+        int[] firstMovement = chosenMove.getMove(0);
+        Pieces usedPiece = board.getPiece(firstMovement[1]);
+
+        for (int i = 0 ; i <= numOfSteps; i++) {
+            int[] tempMovement = chosenMove.getMove(i);
+
+            board.setPiece(tempMovement[1], Pieces.Empty);
+            board.setPiece(tempMovement[2],usedPiece);
+            if(tempMovement[3] != 0){
+                board.setPiece(tempMovement[3],Pieces.Empty);
+                opponent.setAmountOfPieces(opponent.getAmountOfPieces()-1);
+            }
+
+        }
+
+        board = this.becomeDame(board);
+
+        return board;
+    }
 
 
-
-
-    public abstract Board move(Board board, Player opponent);
+    public abstract Integer chooseMove(int numOfMoves);
 }
