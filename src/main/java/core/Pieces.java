@@ -12,12 +12,12 @@ public enum  Pieces{
     Empty,
     Boarder;
 
-
+    /**
+     * Method to define the color of the Piece
+     * @author Nadine Huetter
+     */
     public Color getColor(){
-        /**
-         * Method to define the color of the Piece
-         * @author Nadine Huetter
-         */
+
 
         switch (this){
             case DameB:
@@ -33,12 +33,12 @@ public enum  Pieces{
         }
 
     }
-
+    /**
+     * Method to define the Kind of the Piece
+     * @author Nadine Huetter
+     */
     public Kind getKind(){
-        /**
-         * Method to define the Kind of the Piece
-         * @author Nadine Huetter
-         */
+
         switch (this){
             case DameB:
             case DameW:
@@ -52,13 +52,13 @@ public enum  Pieces{
 
         }
     }
-
+    /**
+     * Method to define the Unicode of the Piece used to Print the Board into the console
+     * @author Nadine Huetter
+     */
     public String getUnicode(){
 
-        /**
-         * Method to define the Unicode of the Piece used to Print the Board into the console
-         * @author Nadine Huetter
-         */
+
         switch(this){
             case DameB:
                 return" \u265a ";

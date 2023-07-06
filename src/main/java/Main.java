@@ -1,24 +1,21 @@
 import controler.Game;
+import controler.Reader;
 import core.Pieces;
 import model.Board;
-//import model.ComPlayer;
 import model.ComPlayer;
 import model.Player;
 import model.UserPlayer;
-//import model.UserPlayer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Main {
+    /**
+    * the main-funktion combines all other classes and gives the possibility
+     * to play several playthroughs without restarting the application
+     *
+    * @author Nadine Huetter
+    */
     public static void main(String[] args){
-        /**
-         * the main-funktion combines all other classes and gives the possebilety
-         * to play several playthroughs without restarting the application
-         *
-         * @author Nadine Huetter
-         */
+
         System.out.println(Pieces.DameB.getUnicode()+Pieces.DameW.getUnicode());
         Game game = chooseGamemode();
         boolean whiteWon= game.playGame();
@@ -34,40 +31,28 @@ public class Main {
          * @author Nadine Huetter
          */
         // System.out.println("Do you want to play an other round?(y/n)");
-       // String input = Readinput();
+       // String input = Reader.ReadInput();
         //if (input == "y" || input =="Y"){
 
         //}
 
     }
 
-    public static String Readinput(){
-        /**
-         * Reads the console input
-         */
-        BufferedReader keyboard =
-                new BufferedReader( new InputStreamReader(System.in));
-        try {
-            return keyboard.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-    }
-
+    /**
+     * choosing the game mode by console input
+     *
+     * @author Nadine Huetter
+     */
     public static Game chooseGamemode(){
 
-        /**
-         * choosing the gamemode by console input
-         *
-         * @author Nadine Huetter
-         */
+
         // start game by choosing which mode you want to play
         System.out.println("choose game mode:");
         System.out.println("(0) Player vs. Player");
         System.out.println("(1) Player vs. Computer");
         System.out.println("(2) Computer vs. Computer");
 
-        String input = Readinput();
+        String input = Reader.ReadInput();
         Board board = new Board();
         Player player1;
         Player player2;

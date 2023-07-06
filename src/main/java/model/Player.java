@@ -25,7 +25,6 @@ public abstract class Player {
 
     /**
      * test if one Piece can jump an opponents Piece
-     *
      * it's Impossible for a Piece on the board to have two ways to jump because per turn only one way can open up,
      * and you are forced to immediately jump your opponents pieces if possible
      *
@@ -340,7 +339,7 @@ public abstract class Player {
     public Board becomeDame (Board board){
 
 
-        int startingField = 0;
+        int startingField;
         if(this.isWhite()){
             startingField = 11;
         }else{

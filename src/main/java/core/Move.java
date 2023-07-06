@@ -25,48 +25,44 @@ public class Move {
     public int getNumberOfMoves() {
         return numberOfMoves;
     }
+    /**
+     * Method to add a step to the Move, using a StringBuilder
+     *
+     * @author Nadine Huetter
+     */
+    public void addMove(Player player, int startPosition , int endPosition, int jumpedStone){
 
-    public void setNumberOfMoves(int numberOfMoves) {
-        this.numberOfMoves = numberOfMoves;
-    }
-
-    public Move addMove(Player player, int startPosition , int endPositiion, int jumpedStone){
-        /**
-         * Method to add a step to the Move, using a StringBuilder
-         *
-         * @author Nadine Huetter
-         */
         StringBuilder sb = new StringBuilder();
 
         if(player.isWhite()){
-            sb.append( "white;"+ startPosition+ ";"+ endPositiion + ";"+ jumpedStone);
+            sb.append("white;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone);
         }
         else{
-            sb.append( "black;"+ startPosition+ ";"+ endPositiion + ";"+ jumpedStone);
+            sb.append("black;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone);
         }
         this.move += sb.toString();
         this.numberOfMoves+=1;
-        return null;
-    }
 
+    }
+    /**
+     * Method to access the coordinates of every Step in a Move
+     *if there was no stone Jumped in this move the last element will be 0
+     * first element is color of Player --> pls don't use
+     * second is start point
+     * third is end move
+     * last gives position of Jumped stone
+     *
+     * @author Nadine Huetter
+     *
+     */
     public int[] getMove( int step){
-        /**
-         * Method to access the cordinates of every Step in a Move
-         *if there was no stone Jumped in this move the last element will be 0
-         * first element is color of Player --> pls don't use
-         * second is startpoint
-         * third is endmove
-         * last gives position of Jumped stone
-         *
-         * @author Nadine Huetter
-         *
-         */
+
         int[] move = new int[4];
         String[] elements = this.move.split(";");
         System.out.println(elements.length);
         System.out.println(step);
 
-        if (elements[step*4 + 0]== "white"){
+        if (elements[step * 4].equals("white")){
             move[0]= 1; //white is true
         }else{
             move[0]=0;  //black is true

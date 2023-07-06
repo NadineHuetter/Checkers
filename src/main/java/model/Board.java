@@ -3,15 +3,13 @@
 package model;
 
 import core.Pieces;
-
+/**
+ * Implementation of the Board as an array
+ *
+ * @author Nadine Huetter
+ */
 public class Board {
-
-    /**
-     * Implementation of the Board as an array
-     *
-     * @author Nadine Huetter
-     */
-    private Pieces[] board = new Pieces[10*10];
+    private final Pieces[] board = new Pieces[10*10];
     private int whitePieces;
     private int blackPieces;
 
@@ -37,13 +35,13 @@ public class Board {
     public void setBlackPieces(int blackPieces) {
         this.blackPieces = blackPieces;
     }
-
+    /**
+     * Sets up the starting Position of the stones and marks the border
+     *
+     * @author Nadine Huetter
+     */
     public void initializeBoard(){
-        /**
-         * Sets up the starting Position of the stones and marks the border
-         *
-         * @author Nadine Huetter
-         */
+
 
         for(int i = 0; i<100; i++ ){
 
@@ -53,9 +51,9 @@ public class Board {
            if (row ==0 || row == 9 || col == 0 || col == 9){
              board[i] = Pieces.Boarder;
               //Border
-           } else if ((row+col)%2 == 0 && row>0 && row <4) {
+           } else if ((row+col)%2 == 0 && row <4) {
                board[i] = Pieces.PawnB;//PawnB
-           } else if ((row+col)%2 == 0 && row>5 && row <9) {
+           } else if ((row+col)%2 == 0 && row>5 ) {
                board[i] = Pieces.PawnW;//PawnW
            }else{
                board[i] = Pieces.Empty;//Empty
@@ -67,12 +65,13 @@ public class Board {
 
     }
 
+    /**
+     * Method to Print the current board utilizing Unicode
+     *
+     * @author Nadine Huetter
+     */
     public void printBoard(){
-        /**
-         * Method to Print the current board utilizing Unicode
-         *
-         * @author Nadine Huetter
-         */
+
         for(int i = 0; i<10 ;i++){
             for (int j = 0; j<10; j++){
                 System.out.print(board[i*10+j].getUnicode()+ "|");
