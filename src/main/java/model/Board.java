@@ -12,6 +12,8 @@ public class Board {
      * @author Nadine Huetter
      */
     private Pieces[] board = new Pieces[10*10];
+    private int whitePieces;
+    private int blackPieces;
 
     public Pieces getPiece(int i){
         return board[i];
@@ -20,6 +22,21 @@ public class Board {
         board[i]= piece;
     }
 
+    public int getWhitePieces() {
+        return whitePieces;
+    }
+
+    public void setWhitePieces(int whitePieces) {
+        this.whitePieces = whitePieces;
+    }
+
+    public int getBlackPieces() {
+        return blackPieces;
+    }
+
+    public void setBlackPieces(int blackPieces) {
+        this.blackPieces = blackPieces;
+    }
 
     public void initializeBoard(){
         /**
@@ -45,6 +62,8 @@ public class Board {
            }
 
         }
+        this.whitePieces=12;
+        this.blackPieces=12;
 
     }
 

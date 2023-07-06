@@ -14,20 +14,11 @@ public abstract class Player {
      *
      */
 
-    private int amountOfPieces;
     private boolean white; //decides If the Player Plays the white or the Black Pieces
 
     public Player(boolean white) {
-        this.amountOfPieces=12;
+
         this.white = white;
-    }
-
-    public int getAmountOfPieces() {
-        return amountOfPieces;
-    }
-
-    public void setAmountOfPieces(int amountOfPieces) {
-        this.amountOfPieces = amountOfPieces;
     }
 
     public boolean isWhite() {
@@ -128,6 +119,11 @@ public abstract class Player {
     } 
 
     public boolean jump(int i,Board board, Direction direction){
+        /**
+         * this Method tests the possibility of a specific pawn to jump in a specific direction
+         *
+         * @author Nadine Huetter
+         */
 
         if(this.isWhite()) {
             if (board.getPiece(i + direction.getMovement()).getColor() == Color.Black && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty) {
@@ -140,6 +136,12 @@ public abstract class Player {
     }
     
     public int testDame(int i, Board board,Direction direction){
+        /**
+         * this Method tests the possibility of a specific Dame to jump a piece in a specific direction,
+         * returning the position of the jumped Stone
+         *
+         * @author Nadine Huetter
+         */
         int positionOfJumpedStone=0;
         int n =1;
         while (board.getPiece(i+n*direction.getMovement()) != Pieces.Boarder){
@@ -242,7 +244,7 @@ public abstract class Player {
 
                                 }
 
-                            } else{ //jump movement of the Dame
+                            } else{ // movement of the Dame
                                 int amountOfMovesNW = 0, amountOfMovesNE =0, amountOfMovesSW=0 ,amountOfMovesSE = 0;
                                 Move tempMoveNW = new Move();
                                 Move tempMoveNE = new Move();
@@ -342,6 +344,12 @@ public abstract class Player {
 
 
     public Board becomeDame (Board board){
+        /**
+         * Method to check for, and create a dame
+         *
+         * @author Nadine Huetter
+         */
+
         int startingField = 0;
         if(this.isWhite()){
             startingField = 11;
@@ -354,8 +362,6 @@ public abstract class Player {
             if(this.isWhite()){
                 if(board.getPiece(startingField)== Pieces.PawnW){
                     board.setPiece(startingField,Pieces.DameW);
-
-
                 }
 
 
@@ -371,7 +377,16 @@ public abstract class Player {
         return board;
     }
 
-    public Board move(Board board, Player opponent) {  //TODO:change board to pointer
+
+    /**
+     * Method to execute the move of the Player
+     * @param board
+     * @param opponent
+     * @return
+     * @author Nadine Huetter
+     */
+    public Board move(Board board, Player opponent) {
+
         List<Move> possibleMoves = getPossibleMoves(board);
         int numOfMoves = possibleMoves.size();
         for (int i = 0; i < numOfMoves; i++) {
@@ -391,7 +406,12 @@ public abstract class Player {
             board.setPiece(tempMovement[2],usedPiece);
             if(tempMovement[3] != 0){
                 board.setPiece(tempMovement[3],Pieces.Empty);
-                opponent.setAmountOfPieces(opponent.getAmountOfPieces()-1);
+                if(opponent.isWhite()){
+                    board.setWhitePieces(board.getWhitePieces()-1);
+                }else{
+                    board.setBlackPieces(board.getBlackPieces()-1);
+                }
+
             }
 
         }
@@ -402,5 +422,12 @@ public abstract class Player {
     }
 
 
+    /**
+     * abstract Method to choose a move to execute
+     *
+     * @author Nadine Huetter
+     * @param numOfMoves
+     * @return
+     */
     public abstract Integer chooseMove(int numOfMoves);
 }

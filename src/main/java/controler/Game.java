@@ -40,14 +40,14 @@ public class Game {
             if(currentPlayer==1) {
                 this.board.printBoard();
                Board tempBoard = player1.move(this.board, player2);
-               Board tempBoard2 = player1.becomeDame(tempBoard);
-               this.board= tempBoard2;
+               //Board tempBoard2 = player1.becomeDame(tempBoard);
+               this.board= tempBoard;
                 currentPlayer=2;
             }else{
                 this.board.printBoard();
                 Board tempBoard = player2.move(this.board, player1);
-                Board tempBoard2 = player2.becomeDame(tempBoard);
-                this.board= tempBoard2;
+                //Board tempBoard2 = player2.becomeDame(tempBoard);
+                this.board= tempBoard;
                 currentPlayer=1;
             }
             winner=isOver();
@@ -64,10 +64,10 @@ public class Game {
          *
          * @author Nadine Huetter
          */
-        if (player1.getAmountOfPieces() == 0) {
+        if (board.getWhitePieces() == 0) { //Player 1 is always White
             this.isOver = true;
             return player2;
-        } else if (player2.getAmountOfPieces()==0) {
+        } else if (board.getBlackPieces()==0) { //Player 2 is always Black
             this.isOver = true;
             return player1;
 

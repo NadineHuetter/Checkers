@@ -19,7 +19,7 @@ public class UserPlayer extends Player{
     }
 
 
-    public Board move(Board board, Player opponent) {  //TODO:change board to pointer
+  /*  public Board move(Board board, Player opponent) {  //TODO:change board to pointer
         List<Move> possibleMoves = getPossibleMoves(board);
         int numOfMoves = possibleMoves.size();
         for (int i = 0; i < numOfMoves; i++) {
@@ -47,7 +47,7 @@ public class UserPlayer extends Player{
         board = this.becomeDame(board);
 
         return board;
-    }
+    } */
 
     @Override
     public Integer chooseMove(int numOfMoves){
