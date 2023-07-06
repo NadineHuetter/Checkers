@@ -4,17 +4,15 @@ import core.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
+
 
 public abstract class Player {
     /**
      * abstract class representing the Player
      *
-     * @author Nadine Huetter
-     *
      */
 
-    private boolean white; //decides If the Player Plays the white or the Black Pieces
+    final private boolean white; //decides If the Player Plays the white or the Black Pieces
 
     public Player(boolean white) {
 
@@ -25,45 +23,42 @@ public abstract class Player {
         return white;
     }
 
-    public void setWhite(boolean white) {
-        this.white = white;
-    }
+    /**
+     * test if one Piece can jump an opponents Piece
+     *
+     * it's Impossible for a Piece on the board to have two ways to jump because per turn only one way can open up,
+     * and you are forced to immediately jump your opponents pieces if possible
+     *
+     * @author Nadine Huetter
+     */
+    public List<Move> getJumpPossibilities(int i, Board board){
 
-    public List<Move> getjumpPossibilitys(int i, Board board){
-        /**
-         * test if one Piece can jump an opponents Piece
-         *
-         * it's Impossible for a Piece on the board to have two ways to jump because per turn only one way can open up,
-         * and you are forced to immediately jump your opponents pieces if possible
-         *
-         * @author Nadine Huetter
-         */
-        Move jumpPossibilitys = new Move();
-        List<Move> allPossibilitys = new ArrayList<>();
+        Move jumpPossibilities = new Move();
+        List<Move> allPossibilities = new ArrayList<>();
         Pieces currentPiece = board.getPiece(i);
         int currentPlace =i;
 
 
         if (currentPiece.getKind() == Kind.Pawn){
 
-            if(jumpPossibilitys.getNumberOfMoves()== 0){
+            if(jumpPossibilities.getNumberOfMoves()== 0){
                 if(this.isWhite()){
                     if(jump(currentPlace,board,Direction.NorthEast)){
-                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
+                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
                         currentPlace=currentPlace+2*Direction.NorthEast.getMovement();
                     }
                     else if(jump(currentPlace,board,Direction.NorthWest)){
-                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
+                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
                         currentPlace=currentPlace+2*Direction.NorthWest.getMovement();
                     }
 
                 }else{
                     if(jump(currentPlace,board,Direction.SouthEast)){
-                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
+                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
                         currentPlace=currentPlace+2*Direction.SouthEast.getMovement();
                     }
                     else if(jump(currentPlace,board,Direction.SouthWest)){
-                        jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
+                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
                         currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
                     }
 
@@ -71,77 +66,72 @@ public abstract class Player {
 
             }else {
                 if(jump(currentPlace,board,Direction.NorthEast)){
-                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
+                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
                     currentPlace=currentPlace+2*Direction.NorthEast.getMovement();
                 }
                 else if(jump(currentPlace,board,Direction.NorthWest)){
-                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
+                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
                     currentPlace=currentPlace+2*Direction.NorthWest.getMovement();
                 }
                 else if(jump(currentPlace,board,Direction.SouthEast)){
-                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
+                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
                     currentPlace=currentPlace+2*Direction.SouthEast.getMovement();
                 }
                 else if(jump(currentPlace,board,Direction.SouthWest)){
-                    jumpPossibilitys.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
+                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
                     currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
                 }
             }
             
-            allPossibilitys.add(jumpPossibilitys);
+            allPossibilities.add(jumpPossibilities);
 
         }
         else {//TestDame
             if(testDame(i,board,Direction.NorthEast) != 0){
                 Move tempMove =new Move();
                 tempMove.addMove(this,i,testDame(i,board,Direction.NorthEast)+Direction.NorthEast.getMovement(),testDame(i,board,Direction.NorthEast));
-                allPossibilitys.add(tempMove);
+                allPossibilities.add(tempMove);
             }
             if(testDame(i,board,Direction.NorthWest) != 0){
                 Move tempMove =new Move();
                 tempMove.addMove(this,i,testDame(i,board,Direction.NorthWest)+Direction.NorthWest.getMovement(),testDame(i,board,Direction.NorthWest));
-                allPossibilitys.add(tempMove);
+                allPossibilities.add(tempMove);
                 
             }
             if(testDame(i,board,Direction.SouthEast) != 0){
                 Move tempMove =new Move();
                 tempMove.addMove(this,i,testDame(i,board,Direction.SouthEast)+Direction.SouthEast.getMovement(),testDame(i,board,Direction.SouthEast));
-                allPossibilitys.add(tempMove);
+                allPossibilities.add(tempMove);
             }
             if(testDame(i,board,Direction.SouthWest) != 0){
                 Move tempMove =new Move();
                 tempMove.addMove(this,i,testDame(i,board,Direction.SouthWest)+Direction.SouthWest.getMovement(),testDame(i,board,Direction.SouthWest));
-                allPossibilitys.add(tempMove);
+                allPossibilities.add(tempMove);
             }
             
         }
-        return allPossibilitys;
-    } 
-
+        return allPossibilities;
+    }
+    /**
+     * this Method tests the possibility of a specific pawn to jump in a specific direction
+     *
+     * @author Nadine Huetter
+     */
     public boolean jump(int i,Board board, Direction direction){
-        /**
-         * this Method tests the possibility of a specific pawn to jump in a specific direction
-         *
-         * @author Nadine Huetter
-         */
+
 
         if(this.isWhite()) {
-            if (board.getPiece(i + direction.getMovement()).getColor() == Color.Black && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty) {
-                return true;
-            }
-        }else if (board.getPiece(i + direction.getMovement()).getColor() == Color.White && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty) {
-            return true;
-        }
-        return false;
+            return board.getPiece(i + direction.getMovement()).getColor() == Color.Black && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty;
+        }else return board.getPiece(i + direction.getMovement()).getColor() == Color.White && board.getPiece(i + 2 * direction.getMovement()) == Pieces.Empty;
     }
-    
+    /**
+     * this Method tests the possibility of a specific Dame to jump a piece in a specific direction,
+     * returning the position of the jumped Stone
+     *
+     * @author Nadine Huetter
+     */
     public int testDame(int i, Board board,Direction direction){
-        /**
-         * this Method tests the possibility of a specific Dame to jump a piece in a specific direction,
-         * returning the position of the jumped Stone
-         *
-         * @author Nadine Huetter
-         */
+
         int positionOfJumpedStone=0;
         int n =1;
         while (board.getPiece(i+n*direction.getMovement()) != Pieces.Boarder){
@@ -167,14 +157,14 @@ public abstract class Player {
         return positionOfJumpedStone;
     }
 
-
+    /**
+     * creates a List with all possible Moves
+     * If the can jump gave results, there won't be new Moves addet
+     *
+     * @author Nadine Huetter
+     */
     public List<Move> getPossibleMoves(Board board){
-        /**
-         * creates a List with all possible Moves
-         * If the can jump gave results, there won't be new Moves addet
-         *
-         * @author Nadine Huetter
-         */
+
         List<Move> possibleMoves = new ArrayList<>();
         for(int i = 0; i<10; i++){
             for(int j = 0; j<10 ; j++){
@@ -186,7 +176,7 @@ public abstract class Player {
                         if(currentPiece.getColor() == Color.Black){// white can't move black Pieces
                         }
                         else {
-                            List<Move> tempMove = getjumpPossibilitys(i*10+j,board);
+                            List<Move> tempMove = getJumpPossibilities(i*10+j,board);
                             for (Move move: tempMove
                                  ) {if(move.getNumberOfMoves() != 0){
                                 possibleMoves.add(move);
@@ -200,10 +190,10 @@ public abstract class Player {
 
                     } else {
                         if(currentPiece.getColor() == Color.White){
-                          ; // black can't move white Pieces
+                           // black can't move white Pieces
                         }
                         else{ //jump movement of the Dame
-                            List<Move> tempMove = getjumpPossibilitys(i*10+j,board);
+                            List<Move> tempMove = getJumpPossibilities(i*10+j,board);
                             for (Move move: tempMove
                             ) {if(move.getNumberOfMoves() != 0){
                                 possibleMoves.add(move);
@@ -230,7 +220,7 @@ public abstract class Player {
                     else {
                         if (this.isWhite()) {
                             if(currentPiece.getColor() == Color.Black){// white can't move black Pieces
-                            } else if (currentPiece == Pieces.PawnW) { //pawns can only jump direct neightbors
+                            } else if (currentPiece == Pieces.PawnW) { //pawns can only jump direct neighbours
                                 if(board.getPiece(i * 10 + j + Direction.NorthWest.getMovement()) == Pieces.Empty){
                                     Move tempMove =new Move();
                                     tempMove.addMove(this, i*10+j,i * 10 + j + Direction.NorthWest.getMovement(),0 );
@@ -282,8 +272,8 @@ public abstract class Player {
 
                         } else {
                             if(currentPiece.getColor() == Color.White){
-                                ; // black can't move white Pieces
-                            } else if (currentPiece == Pieces.PawnB) { //pawns can only jump direct neightbors
+                                 // black can't move white Pieces
+                            } else if (currentPiece == Pieces.PawnB) { //pawns can only jump direct neighbours
                                 if(board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()) == Pieces.Empty){
                                     Move tempMove =new Move();
                                     tempMove.addMove(this, i*10+j,i * 10 + j + Direction.SouthWest.getMovement(),0 );
@@ -340,15 +330,15 @@ public abstract class Player {
 
 
         return possibleMoves;
-    };
+    }
 
-
+    /**
+     * Method to check for, and create a dame
+     *
+     * @author Nadine Huetter
+     */
     public Board becomeDame (Board board){
-        /**
-         * Method to check for, and create a dame
-         *
-         * @author Nadine Huetter
-         */
+
 
         int startingField = 0;
         if(this.isWhite()){
