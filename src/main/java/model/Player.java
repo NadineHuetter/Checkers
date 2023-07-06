@@ -206,9 +206,9 @@ public abstract class Player {
             }
         }
 
-        /**
-         * test if there were Jumps possible otherwise make a list of all the possible moves not including Jumps
-         * if there were Jumps Possible Return the current list (only including the Possible Jumps
+        /*
+          test if there were Jumps possible otherwise make a list of all the possible moves not including Jumps
+          if there were Jumps Possible Return the current list (only including the Possible Jumps
          */
         if(possibleMoves.isEmpty() ){
             for(int i = 0; i<10; i++){
@@ -244,25 +244,29 @@ public abstract class Player {
                                         board.getPiece(i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveNW.addMove(this,i * 10 + j +Direction.NorthWest.getMovement()*amountOfMovesNW,i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveNW);
+                                    amountOfMovesNW += 1;
 
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
-                                    tempMoveNE.addMove(this,i * 10 + j +Direction.NorthEast.getMovement()*amountOfMovesNW,i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW,0);
+                                    tempMoveNE.addMove(this,i * 10 + j +Direction.NorthEast.getMovement()*amountOfMovesNE,i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveNE);
+                                    amountOfMovesNE += 1;
 
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW) != Pieces.Boarder){
-                                    tempMoveSW.addMove(this,i * 10 + j +Direction.SouthWest.getMovement()*amountOfMovesNW,i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW,0);
+                                    tempMoveSW.addMove(this,i * 10 + j +Direction.SouthWest.getMovement()*amountOfMovesSW,i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSW);
+                                    amountOfMovesSW += 1;
 
                                 }
 
                                 while (board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
-                                    tempMoveSE.addMove(this,i * 10 + j +Direction.SouthEast.getMovement()*amountOfMovesNW,i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW,0);
+                                    tempMoveSE.addMove(this,i * 10 + j +Direction.SouthEast.getMovement()*amountOfMovesSE,i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSE);
+                                    amountOfMovesSE += 1;
 
                                 }
 
@@ -297,24 +301,28 @@ public abstract class Player {
                                         board.getPiece(i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveNW.addMove(this,i * 10 + j +Direction.NorthWest.getMovement()*amountOfMovesNW,i * 10 + j + Direction.NorthWest.getMovement()+Direction.NorthWest.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveNW);
+                                    amountOfMovesNW += 1;
 
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveNE.addMove(this,i * 10 + j +Direction.NorthEast.getMovement()*amountOfMovesNE,i * 10 + j + Direction.NorthEast.getMovement()+Direction.NorthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveNE);
+                                    amountOfMovesNE += 1;
 
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveSW.addMove(this,i * 10 + j +Direction.SouthWest.getMovement()*amountOfMovesSW,i * 10 + j + Direction.SouthWest.getMovement()+Direction.SouthWest.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSW);
+                                    amountOfMovesSW += 1;
 
                                 }
                                 while (board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) == Pieces.Empty &&
                                         board.getPiece(i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW) != Pieces.Boarder){
                                     tempMoveSE.addMove(this,i * 10 + j +Direction.SouthEast.getMovement()*amountOfMovesSE,i * 10 + j + Direction.SouthEast.getMovement()+Direction.SouthEast.getMovement()*amountOfMovesNW,0);
                                     possibleMoves.add(tempMoveSE);
+                                    amountOfMovesSE +=1;
 
                                 }
 
