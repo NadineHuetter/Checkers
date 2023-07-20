@@ -39,46 +39,44 @@ public abstract class Player {
 
 
         if (currentPiece.getKind() == Kind.Pawn){
+            while(true) {
 
-            if(jumpPossibilities.getNumberOfMoves()== 0){
-                if(this.isWhite()){
-                    if(jump(currentPlace,board,Direction.NorthEast)){
-                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
-                        currentPlace=currentPlace+2*Direction.NorthEast.getMovement();
-                    }
-                    else if(jump(currentPlace,board,Direction.NorthWest)){
-                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
-                        currentPlace=currentPlace+2*Direction.NorthWest.getMovement();
+                if (jumpPossibilities.getNumberOfMoves() == 0) {
+                    if (this.isWhite()) {
+                        if (jump(currentPlace, board, Direction.NorthEast)) {
+                            jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthEast.getMovement(), currentPlace + Direction.NorthEast.getMovement());
+                            currentPlace = currentPlace + 2 * Direction.NorthEast.getMovement();
+                        } else if (jump(currentPlace, board, Direction.NorthWest)) {
+                            jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthWest.getMovement(), currentPlace + Direction.NorthWest.getMovement());
+                            currentPlace = currentPlace + 2 * Direction.NorthWest.getMovement();
+                        } else {break;}
+
+                    } else {
+                        if (jump(currentPlace, board, Direction.SouthEast)) {
+                            jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthEast.getMovement(), currentPlace + Direction.SouthEast.getMovement());
+                            currentPlace = currentPlace + 2 * Direction.SouthEast.getMovement();
+                        } else if (jump(currentPlace, board, Direction.SouthWest)) {
+                            jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthWest.getMovement(), currentPlace + Direction.SouthWest.getMovement());
+                            currentPlace = currentPlace + 2 * Direction.SouthWest.getMovement();
+                        } else{break;}
+
                     }
 
-                }else{
-                    if(jump(currentPlace,board,Direction.SouthEast)){
-                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
-                        currentPlace=currentPlace+2*Direction.SouthEast.getMovement();
+                } else {
+                    if (jump(currentPlace, board, Direction.NorthEast)) {
+                        jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthEast.getMovement(), currentPlace + Direction.NorthEast.getMovement());
+                        currentPlace = currentPlace + 2 * Direction.NorthEast.getMovement();
+                    } else if (jump(currentPlace, board, Direction.NorthWest)) {
+                        jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthWest.getMovement(), currentPlace + Direction.NorthWest.getMovement());
+                        currentPlace = currentPlace + 2 * Direction.NorthWest.getMovement();
+                    } else if (jump(currentPlace, board, Direction.SouthEast)) {
+                        jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthEast.getMovement(), currentPlace + Direction.SouthEast.getMovement());
+                        currentPlace = currentPlace + 2 * Direction.SouthEast.getMovement();
+                    } else if (jump(currentPlace, board, Direction.SouthWest)) {
+                        jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthWest.getMovement(), currentPlace + Direction.SouthWest.getMovement());
+                        currentPlace = currentPlace + 2 * Direction.SouthWest.getMovement();
                     }
-                    else if(jump(currentPlace,board,Direction.SouthWest)){
-                        jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
-                        currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
-                    }
-
-                }
-
-            }else {
-                if(jump(currentPlace,board,Direction.NorthEast)){
-                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthEast.getMovement(),currentPlace+Direction.NorthEast.getMovement());
-                    currentPlace=currentPlace+2*Direction.NorthEast.getMovement();
-                }
-                else if(jump(currentPlace,board,Direction.NorthWest)){
-                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.NorthWest.getMovement(),currentPlace+Direction.NorthWest.getMovement());
-                    currentPlace=currentPlace+2*Direction.NorthWest.getMovement();
-                }
-                else if(jump(currentPlace,board,Direction.SouthEast)){
-                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthEast.getMovement(),currentPlace+Direction.SouthEast.getMovement());
-                    currentPlace=currentPlace+2*Direction.SouthEast.getMovement();
-                }
-                else if(jump(currentPlace,board,Direction.SouthWest)){
-                    jumpPossibilities.addMove(this,currentPlace,currentPlace+2*Direction.SouthWest.getMovement(),currentPlace+Direction.SouthWest.getMovement());
-                    currentPlace=currentPlace+2*Direction.SouthWest.getMovement();
+                    else{break;}
                 }
             }
             
@@ -382,49 +380,6 @@ public abstract class Player {
      * @return
      * @author Nadine Huetter
      */
-    public Board move(Board board, Player opponent) {
+    public abstract Board move(Board board, Player opponent);
 
-        List<Move> possibleMoves = getPossibleMoves(board);
-        int numOfMoves = possibleMoves.size();
-        for (int i = 0; i < numOfMoves; i++) {
-            System.out.println("("+i+")"+possibleMoves.get(i).getMove());
-        }
-        int chosenMoveNum=chooseMove(numOfMoves);
-
-        Move chosenMove = possibleMoves.get(chosenMoveNum);
-        int numOfSteps = chosenMove.getNumberOfMoves() -1;
-        int[] firstMovement = chosenMove.getMove(0);
-        Pieces usedPiece = board.getPiece(firstMovement[1]);
-
-        for (int i = 0 ; i <= numOfSteps; i++) {
-            int[] tempMovement = chosenMove.getMove(i);
-
-            board.setPiece(tempMovement[1], Pieces.Empty);
-            board.setPiece(tempMovement[2],usedPiece);
-            if(tempMovement[3] != 0){
-                board.setPiece(tempMovement[3],Pieces.Empty);
-                if(opponent.isWhite()){
-                    board.setWhitePieces(board.getWhitePieces()-1);
-                }else{
-                    board.setBlackPieces(board.getBlackPieces()-1);
-                }
-
-            }
-
-        }
-
-        board = this.becomeDame(board);
-
-        return board;
-    }
-
-
-    /**
-     * abstract Method to choose a move to execute
-     *
-     * @author Nadine Huetter
-     * @param numOfMoves
-     * @return
-     */
-    public abstract Integer chooseMove(int numOfMoves);
 }
