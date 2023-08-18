@@ -59,8 +59,8 @@ public class Move {
 
         int[] move = new int[4];
         String[] elements = this.move.split(";");
-        System.out.println(elements.length);
-        System.out.println(step);
+        //System.out.println(elements.length);
+       // System.out.println(step);
 
         if (elements[step * 4].equals("white")){
             move[0]= 1; //white is true

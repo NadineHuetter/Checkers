@@ -365,7 +365,7 @@ public abstract class Player {
                     board.setPiece(startingField,Pieces.DameB);
                 }
             }
-            System.out.println(startingField);
+           // System.out.println(startingField);
             startingField += 2;
 
         }
