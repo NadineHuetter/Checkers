@@ -208,6 +208,7 @@ public abstract class Player {
           test if there were Jumps possible otherwise make a list of all the possible moves not including Jumps
           if there were Jumps Possible Return the current list (only including the Possible Jumps
          */
+        System.out.println("test1");
         if(possibleMoves.isEmpty() ){
             for(int i = 0; i<10; i++){
                 for(int j = 0; j<10 ; j++){
@@ -333,7 +334,12 @@ public abstract class Player {
 
         }
 
+        System.out.println("test2");
+        for (Move move: possibleMoves
+             ) {
+            System.out.println(move.getMove());
 
+        }
         return possibleMoves;
     }
 

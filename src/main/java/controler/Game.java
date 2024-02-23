@@ -67,7 +67,7 @@ public class Game {
             return player1;
 
         }else {
-        return player1;
+        return player1; //a formality so there is no empty return
         }
     }
 

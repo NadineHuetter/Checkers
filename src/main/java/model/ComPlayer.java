@@ -1,13 +1,14 @@
 package model;
 
-import core.Color;
+
 import core.Move;
 import core.Pieces;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import java.util.Random;
+
 
 public class ComPlayer extends Player {
     /**
@@ -22,101 +23,72 @@ public class ComPlayer extends Player {
 
     @Override
     public Board move(Board board, Player opponent) {
-        List<Map<Move, List<Map<Move, List<Map<Move, Board>>>>>> tree = buildTree(board);
+        List<Move> listOfProbableMoves = buildTree(board);
 
-
-        List<Move> listOfProbableMoves = new ArrayList<>();
-        int max1 = -200;
-
-        for (Map<Move, List<Map<Move, List<Map<Move, Board>>>>> map1: tree) { //First Layer (Max)
-            for (Move move1: map1.keySet()) {
-
-                List<Map<Move, List<Map<Move, Board>>>> Layer2 = map1.get(move1);
-
-                int min2 = 600;
-
-                for (Map<Move, List<Map<Move, Board>>> map2 : Layer2) { //Second Layer (Min)
-                    for (Move move2: map2.keySet()) {
-                        int max3 =-200;
-                        List<Map<Move, Board>> Layer3 =map2.get(move2);
-
-                        for (Map<Move, Board> map3: Layer3) { //Third Layer (Max)
-                            for (Move move3: map3.keySet()) {
-                                Board currentBoard = map3.get(move3);
-                                int quantifier;
-                                if(this.isWhite()){
-                                    quantifier = currentBoard.getWhitePieces()- currentBoard.getBlackPieces();
-                                }else{quantifier= currentBoard.getBlackPieces()- currentBoard.getWhitePieces();}
-                                if(quantifier>max3){
-                                    max3=quantifier;
-
-                                }
-                            }
-                        }
-
-                        if(max3<min2){
-                            min2 = max3;
-                        }
-                    }
-                    
-                }
-
-                if(min2>max1){
-                    listOfProbableMoves.clear();
-                    listOfProbableMoves.add(move1);
-                } else if (min2 == max1) {
-                    listOfProbableMoves.add(move1);
-                }
-            }
-        }
-
+        System.out.println("test");//ToDo
 
         //chooseMove & execute
-        Move chosenMove = new Move();
+
         int amountOfBestMoves = listOfProbableMoves.size();
         int chosenMoveIndex;
         Random random = new Random();
         chosenMoveIndex = random.nextInt(amountOfBestMoves);
-        chosenMove = listOfProbableMoves.get(chosenMoveIndex);
+        Move chosenMove = listOfProbableMoves.get(chosenMoveIndex);
 
-        Board newBoard= executeMove(board,chosenMove,opponent.isWhite());
-
-        return newBoard;
+        return executeMove(board,chosenMove,opponent.isWhite());
     }
 
-    public List<Map<Move,List<Map<Move, List<Map<Move,Board>>>>>> buildTree(Board initialBoard){
-        List<Map<Move,List<Map<Move, List<Map<Move,Board>>>>>> finalTree = new ArrayList<>();
+    public List<Move> buildTree(Board initialBoard){
         ComPlayer opponent = new ComPlayer(!this.isWhite()); // to build the second Layer of the tree
         List<Move> firstLayer = getPossibleMoves(initialBoard);
-        for (Move move1: firstLayer) {
-            Board newBoard = new Board();
-            newBoard = executeMove(initialBoard,move1, opponent.isWhite());
-            List<Move> secondLayer = opponent.getPossibleMoves(newBoard);
-            List<Map<Move,List<Map<Move,Board>>>> secondLayerFin = new ArrayList<>();
-            System.out.println(secondLayer.size() + "   test 2");
-            for (Move move2: secondLayer) {
-                Board newBoard2 = new Board();
-                newBoard2 = opponent.executeMove(newBoard,move2,this.isWhite());
 
-                List<Move> thirdLayer = getPossibleMoves(newBoard2);
-                List<Map<Move,Board>> thirdLayerFin = new ArrayList<>();
-                System.out.println("test3");
+        int max1 = -100;
+        List<Move> listOfProbableMoves = new ArrayList<>();
+
+        if(firstLayer.isEmpty()){System.out.println("error no first layer");}
+
+        for (Move move1: firstLayer) {
+            Board newBoard= executeMove(initialBoard,move1, opponent.isWhite());
+            List<Move> secondLayer = opponent.getPossibleMoves(newBoard);
+
+
+            if(secondLayer.isEmpty()){System.out.println("error no second layer");}
+            int min2 = 100;
+            for (Move move2: secondLayer) {
+                Board newBoard2 = opponent.executeMove(newBoard,move2,this.isWhite());
+                List<Move> thirdLayer = new ArrayList<>();
+                thirdLayer = getPossibleMoves(newBoard2);
+                int max3 = -100;
+                if(thirdLayer.isEmpty()){System.out.println("error no third layer");}
                 for (Move move3: thirdLayer) {
                     Board newBoard3 = executeMove(newBoard2,move3,opponent.isWhite());
-                    thirdLayerFin.add(Map.of(move3,newBoard3));
-                    System.out.println("test7");
+                    int quantifier;
+                    if(this.isWhite()){
+                        quantifier = newBoard3.getWhitePieces()- newBoard3.getBlackPieces();
+                    }else{quantifier= newBoard3.getBlackPieces()- newBoard3.getWhitePieces();}
+                    if(quantifier>max3){
+                        max3=quantifier;
+                    }
 
 
                 }
-                secondLayerFin.add(Map.of(move2,thirdLayerFin ));
-                System.out.println("test4");
+
+                if(max3<min2){
+                    min2 = max3;
+                }
 
             }
-            finalTree.add(Map.of(move1,secondLayerFin));
-            System.out.println(finalTree);
+
+            if(min2==max1){
+                listOfProbableMoves.add(move1);
+            }else if(min2>max1) {
+                listOfProbableMoves.clear();
+                listOfProbableMoves.add(move1);
+            }
         }
 
-        return finalTree;
+
+        return listOfProbableMoves;
     }
 
 
