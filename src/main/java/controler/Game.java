@@ -30,6 +30,10 @@ public class Game {
      *
      * @author Nadine Huetter
      */
+
+    public boolean getIsOver(){
+        return this.isOver;
+    }
     public boolean playGame(){
 
         this.board.initializeBoard();
