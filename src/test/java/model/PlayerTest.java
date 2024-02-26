@@ -1,10 +1,13 @@
 package model;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerTest {
+public class PlayerTest {
     @Test
     public void getJumpPossibilities(){}
 

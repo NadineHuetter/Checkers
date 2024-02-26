@@ -1,10 +1,9 @@
 package model;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class UserPlayerTest {
+public class UserPlayerTest {
 
     @Test
     public void move(){}

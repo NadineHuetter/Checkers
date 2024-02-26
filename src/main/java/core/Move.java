@@ -35,10 +35,10 @@ public class Move {
         StringBuilder sb = new StringBuilder();
 
         if(player.isWhite()){
-            sb.append("white;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone);
+            sb.append("white;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone).append(";");
         }
         else{
-            sb.append("black;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone);
+            sb.append("black;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone).append(";");
         }
         this.move += sb.toString();
         this.numberOfMoves+=1;
