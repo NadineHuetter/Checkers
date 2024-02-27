@@ -357,7 +357,7 @@ public abstract class Player {
         if(this.isWhite()){
             startingField = 11;
         }else{
-            startingField = 92;
+            startingField = 82;
         }
 
 

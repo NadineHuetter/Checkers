@@ -54,36 +54,40 @@ public class ComPlayer extends Player {
         }
 
         for (Move move1: firstLayer) {
-            System.out.println(move1.getMove() + "layer1");
+            //System.out.println(move1.getMove() + "layer1");
             Board newBoard= executeMove(initialBoard,move1, opponent.isWhite());
             List<Move> secondLayer = opponent.getPossibleMoves(newBoard);
+            newBoard.setBoard(initialBoard);
 
 
             if(secondLayer.isEmpty()){break;}
             int min2 = 100;
             for (Move move2: secondLayer) {
-                System.out.println(move2.getMove()+ "layer2");
+                //System.out.println(move2.getMove()+ "layer2");
                 Board newBoard2 = opponent.executeMove(newBoard,move2,this.isWhite());
                 List<Move> thirdLayer = new ArrayList<>();
                 thirdLayer = getPossibleMoves(newBoard2);
+                newBoard2.setBoard(newBoard);
                 int max3 = -100;
                 if(thirdLayer.isEmpty()){break;}
                 for (Move move3: thirdLayer) {
-                    System.out.println(move3.getMove()+"layer3");
+                    //System.out.println(move3.getMove()+"layer3");
                     Board newBoard3 = executeMove(newBoard2,move3,opponent.isWhite());
                     int quantifier;
                     if(this.isWhite()){
                         quantifier = newBoard3.getWhitePieces()- newBoard3.getBlackPieces();
                     }else{quantifier= newBoard3.getBlackPieces()- newBoard3.getWhitePieces();}
+
+                    newBoard3.setBoard(newBoard2);
                     if(quantifier>max3){
-                        System.out.println(quantifier +"q");
+                        //System.out.println(quantifier +"q");
                         max3=quantifier;
 
                     }
 
                 }
 
-                System.out.println(max3+" 3");
+                //System.out.println(max3+" 3");
 
                 if(max3<min2){
                     min2 = max3;
@@ -102,6 +106,10 @@ public class ComPlayer extends Player {
 
 
 
+        }
+
+        for(Move move:listOfProbableMoves ){
+            System.out.println(move.getMove());
         }
 
 

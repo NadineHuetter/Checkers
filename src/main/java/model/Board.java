@@ -23,6 +23,15 @@ public class Board {
 
         }
     }
+
+    public void setBoard(Board board1){
+        for (int i = 0; i < 100; i++) {
+            board[i]=board1.getPiece(i);
+        }
+        whitePieces= board1.getWhitePieces();
+        blackPieces= board1.getBlackPieces();
+
+    }
     public Pieces getPiece(int i){
         return board[i];
     }
