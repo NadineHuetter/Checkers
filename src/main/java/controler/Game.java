@@ -30,6 +30,10 @@ public class Game {
      *
      * @author Nadine Huetter
      */
+
+    public boolean getIsOver(){
+        return this.isOver;
+    }
     public boolean playGame(){
 
         this.board.initializeBoard();
@@ -38,11 +42,14 @@ public class Game {
         while(!this.isOver){ //this.isOver gets changed in the method isOver
             if(currentPlayer==1) {
                 this.board.printBoard();
+                this.isOver();
                 this.board= player1.move(this.board, player2);
+
                 currentPlayer=2;
             }else{
                 this.board.printBoard();
                 this.board=player2.move(this.board, player1);
+                this.isOver();
                 currentPlayer=1;
             }
             winner=isOver();
@@ -67,7 +74,7 @@ public class Game {
             return player1;
 
         }else {
-        return player1;
+        return player1; //a formality so there is no empty return
         }
     }
 

@@ -35,10 +35,10 @@ public class Move {
         StringBuilder sb = new StringBuilder();
 
         if(player.isWhite()){
-            sb.append("white;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone);
+            sb.append("white;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone).append(";");
         }
         else{
-            sb.append("black;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone);
+            sb.append("black;").append(startPosition).append(";").append(endPosition).append(";").append(jumpedStone).append(";");
         }
         this.move += sb.toString();
         this.numberOfMoves+=1;
@@ -59,8 +59,8 @@ public class Move {
 
         int[] move = new int[4];
         String[] elements = this.move.split(";");
-        System.out.println(elements.length);
-        System.out.println(step);
+        //System.out.println(elements.length);
+       // System.out.println(step);
 
         if (elements[step * 4].equals("white")){
             move[0]= 1; //white is true

@@ -13,6 +13,25 @@ public class Board {
     private int whitePieces;
     private int blackPieces;
 
+    /**
+     * funktion to Declare the Board purely for testing purposes
+     * @param pieces
+     */
+    public void setPieces(Pieces[] pieces){
+        for (int i = 0; i < 100; i++) {
+            board[i]=pieces[i];
+
+        }
+    }
+
+    public void setBoard(Board board1){
+        for (int i = 0; i < 100; i++) {
+            board[i]=board1.getPiece(i);
+        }
+        whitePieces= board1.getWhitePieces();
+        blackPieces= board1.getBlackPieces();
+
+    }
     public Pieces getPiece(int i){
         return board[i];
     }

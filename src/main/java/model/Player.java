@@ -45,18 +45,22 @@ public abstract class Player {
                     if (this.isWhite()) {
                         if (jump(currentPlace, board, Direction.NorthEast)) {
                             jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthEast.getMovement(), currentPlace + Direction.NorthEast.getMovement());
+                            board.setPiece(currentPlace + Direction.NorthEast.getMovement(),Pieces.Empty);
                             currentPlace = currentPlace + 2 * Direction.NorthEast.getMovement();
                         } else if (jump(currentPlace, board, Direction.NorthWest)) {
                             jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthWest.getMovement(), currentPlace + Direction.NorthWest.getMovement());
+                            board.setPiece(currentPlace + Direction.NorthWest.getMovement(),Pieces.Empty);
                             currentPlace = currentPlace + 2 * Direction.NorthWest.getMovement();
                         } else {break;}
 
                     } else {
                         if (jump(currentPlace, board, Direction.SouthEast)) {
                             jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthEast.getMovement(), currentPlace + Direction.SouthEast.getMovement());
+                            board.setPiece(currentPlace + Direction.SouthEast.getMovement(),Pieces.Empty);
                             currentPlace = currentPlace + 2 * Direction.SouthEast.getMovement();
                         } else if (jump(currentPlace, board, Direction.SouthWest)) {
                             jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthWest.getMovement(), currentPlace + Direction.SouthWest.getMovement());
+                            board.setPiece(currentPlace + Direction.SouthWest.getMovement(),Pieces.Empty);
                             currentPlace = currentPlace + 2 * Direction.SouthWest.getMovement();
                         } else{break;}
 
@@ -65,15 +69,19 @@ public abstract class Player {
                 } else {
                     if (jump(currentPlace, board, Direction.NorthEast)) {
                         jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthEast.getMovement(), currentPlace + Direction.NorthEast.getMovement());
+                        board.setPiece(currentPlace + Direction.NorthEast.getMovement(),Pieces.Empty);
                         currentPlace = currentPlace + 2 * Direction.NorthEast.getMovement();
                     } else if (jump(currentPlace, board, Direction.NorthWest)) {
                         jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.NorthWest.getMovement(), currentPlace + Direction.NorthWest.getMovement());
+                        board.setPiece(currentPlace + Direction.NorthWest.getMovement(),Pieces.Empty);
                         currentPlace = currentPlace + 2 * Direction.NorthWest.getMovement();
                     } else if (jump(currentPlace, board, Direction.SouthEast)) {
                         jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthEast.getMovement(), currentPlace + Direction.SouthEast.getMovement());
+                        board.setPiece(currentPlace + Direction.SouthEast.getMovement(),Pieces.Empty);
                         currentPlace = currentPlace + 2 * Direction.SouthEast.getMovement();
                     } else if (jump(currentPlace, board, Direction.SouthWest)) {
                         jumpPossibilities.addMove(this, currentPlace, currentPlace + 2 * Direction.SouthWest.getMovement(), currentPlace + Direction.SouthWest.getMovement());
+                        board.setPiece(currentPlace + Direction.SouthWest.getMovement(),Pieces.Empty);
                         currentPlace = currentPlace + 2 * Direction.SouthWest.getMovement();
                     }
                     else{break;}
@@ -349,7 +357,7 @@ public abstract class Player {
         if(this.isWhite()){
             startingField = 11;
         }else{
-            startingField = 92;
+            startingField = 82;
         }
 
 
@@ -365,7 +373,7 @@ public abstract class Player {
                     board.setPiece(startingField,Pieces.DameB);
                 }
             }
-            System.out.println(startingField);
+           // System.out.println(startingField);
             startingField += 2;
 
         }

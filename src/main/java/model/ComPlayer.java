@@ -1,11 +1,14 @@
 package model;
 
+
 import core.Move;
 import core.Pieces;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import java.util.Random;
+
 
 public class ComPlayer extends Player {
     /**
@@ -20,43 +23,102 @@ public class ComPlayer extends Player {
 
     @Override
     public Board move(Board board, Player opponent) {
+        List<Move> listOfProbableMoves = buildTree(board);
 
-        //Max
+        System.out.println("test");//ToDo
 
-        //Min
+        //chooseMove & execute
 
-        //Max
-
-
-        return null;
-    }
-
-    public List<Map<Move,List<Map<Move, List<Move>>>>> buildTree(Board initialBoard){
-        List<Map<Move,List<Map<Move, List<Move>>>>> finalTree = new ArrayList<>();
-        ComPlayer opponent = new ComPlayer(!this.isWhite()); // to build the second Layer of the tree
-        List<Move> firstLayer = getPossibleMoves(initialBoard);
-        for (Move move1: firstLayer) {
-            Board newBoard = new Board();
-            newBoard = executeMove(initialBoard,move1,opponent);
-            List<Move> secondLayer = opponent.getPossibleMoves(newBoard);
-            List<Map<Move,List<Move>>> secondLayerFin = new ArrayList<>();
-            for (Move move2: secondLayer) {
-                Board newBoard2 = new Board();
-                newBoard2 = opponent.executeMove(newBoard,move2,this);
-
-                List<Move> thirdLayer = getPossibleMoves(newBoard2);
-                secondLayerFin.add(Map.of(move2,  thirdLayer ));
-
-            }
-            finalTree.add(Map.of(move1,secondLayerFin));
+        int amountOfBestMoves = listOfProbableMoves.size();
+        if(amountOfBestMoves == 0){
+            return board;
         }
 
-        return finalTree;
+        int chosenMoveIndex;
+        Random random = new Random();
+        chosenMoveIndex = random.nextInt(amountOfBestMoves);
+        Move chosenMove = listOfProbableMoves.get(chosenMoveIndex);
+
+        return executeMove(board,chosenMove,opponent.isWhite());
+    }
+
+    public List<Move> buildTree(Board initialBoard){
+        ComPlayer opponent = new ComPlayer(!this.isWhite()); // to build the second Layer of the tree
+        List<Move> firstLayer = getPossibleMoves(initialBoard);
+
+        int max1 = -100;
+        List<Move> listOfProbableMoves = new ArrayList<>();
+
+        if(firstLayer.isEmpty()){
+            return listOfProbableMoves;
+        }
+
+        for (Move move1: firstLayer) {
+            //System.out.println(move1.getMove() + "layer1");
+            Board newBoard= executeMove(initialBoard,move1, opponent.isWhite());
+            List<Move> secondLayer = opponent.getPossibleMoves(newBoard);
+            newBoard.setBoard(initialBoard);
+
+
+            if(secondLayer.isEmpty()){break;}
+            int min2 = 100;
+            for (Move move2: secondLayer) {
+                //System.out.println(move2.getMove()+ "layer2");
+                Board newBoard2 = opponent.executeMove(newBoard,move2,this.isWhite());
+                List<Move> thirdLayer = new ArrayList<>();
+                thirdLayer = getPossibleMoves(newBoard2);
+                newBoard2.setBoard(newBoard);
+                int max3 = -100;
+                if(thirdLayer.isEmpty()){break;}
+                for (Move move3: thirdLayer) {
+                    //System.out.println(move3.getMove()+"layer3");
+                    Board newBoard3 = executeMove(newBoard2,move3,opponent.isWhite());
+                    int quantifier;
+                    if(this.isWhite()){
+                        quantifier = newBoard3.getWhitePieces()- newBoard3.getBlackPieces();
+                    }else{quantifier= newBoard3.getBlackPieces()- newBoard3.getWhitePieces();}
+
+                    newBoard3.setBoard(newBoard2);
+                    if(quantifier>max3){
+                        //System.out.println(quantifier +"q");
+                        max3=quantifier;
+
+                    }
+
+                }
+
+                //System.out.println(max3+" 3");
+
+                if(max3<min2){
+                    min2 = max3;
+                }
+
+            }
+
+
+            if(min2==max1){
+                listOfProbableMoves.add(move1);
+            }else if(min2>max1) {
+                listOfProbableMoves.clear();
+                listOfProbableMoves.add(move1);
+            }
+
+
+
+
+        }
+
+        for(Move move:listOfProbableMoves ){
+            System.out.println(move.getMove());
+        }
+
+
+        return listOfProbableMoves;
     }
 
 
 
-    public Board executeMove (Board board, Move move, ComPlayer opponent){
+    public Board executeMove (Board board, Move move, boolean opponentIsWhite){
         int numOfSteps = move.getNumberOfMoves() -1;
         int[] firstMovement = move.getMove(0);
         Pieces usedPiece = board.getPiece(firstMovement[1]);
@@ -68,7 +130,7 @@ public class ComPlayer extends Player {
             board.setPiece(tempMovement[2],usedPiece);
             if(tempMovement[3] != 0){
                 board.setPiece(tempMovement[3],Pieces.Empty);
-                if(opponent.isWhite()){
+                if(opponentIsWhite){
                     board.setWhitePieces(board.getWhitePieces()-1);
                 }else{
                     board.setBlackPieces(board.getBlackPieces()-1);
