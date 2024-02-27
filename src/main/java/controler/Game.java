@@ -42,11 +42,14 @@ public class Game {
         while(!this.isOver){ //this.isOver gets changed in the method isOver
             if(currentPlayer==1) {
                 this.board.printBoard();
+                this.isOver();
                 this.board= player1.move(this.board, player2);
+
                 currentPlayer=2;
             }else{
                 this.board.printBoard();
                 this.board=player2.move(this.board, player1);
+                this.isOver();
                 currentPlayer=1;
             }
             winner=isOver();

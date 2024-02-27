@@ -30,6 +30,10 @@ public class ComPlayer extends Player {
         //chooseMove & execute
 
         int amountOfBestMoves = listOfProbableMoves.size();
+        if(amountOfBestMoves == 0){
+            return board;
+        }
+
         int chosenMoveIndex;
         Random random = new Random();
         chosenMoveIndex = random.nextInt(amountOfBestMoves);
@@ -45,33 +49,41 @@ public class ComPlayer extends Player {
         int max1 = -100;
         List<Move> listOfProbableMoves = new ArrayList<>();
 
-        if(firstLayer.isEmpty()){System.out.println("error no first layer");}
+        if(firstLayer.isEmpty()){
+            return listOfProbableMoves;
+        }
 
         for (Move move1: firstLayer) {
+            System.out.println(move1.getMove() + "layer1");
             Board newBoard= executeMove(initialBoard,move1, opponent.isWhite());
             List<Move> secondLayer = opponent.getPossibleMoves(newBoard);
 
 
-            if(secondLayer.isEmpty()){System.out.println("error no second layer");}
+            if(secondLayer.isEmpty()){break;}
             int min2 = 100;
             for (Move move2: secondLayer) {
+                System.out.println(move2.getMove()+ "layer2");
                 Board newBoard2 = opponent.executeMove(newBoard,move2,this.isWhite());
                 List<Move> thirdLayer = new ArrayList<>();
                 thirdLayer = getPossibleMoves(newBoard2);
                 int max3 = -100;
-                if(thirdLayer.isEmpty()){System.out.println("error no third layer");}
+                if(thirdLayer.isEmpty()){break;}
                 for (Move move3: thirdLayer) {
+                    System.out.println(move3.getMove()+"layer3");
                     Board newBoard3 = executeMove(newBoard2,move3,opponent.isWhite());
                     int quantifier;
                     if(this.isWhite()){
                         quantifier = newBoard3.getWhitePieces()- newBoard3.getBlackPieces();
                     }else{quantifier= newBoard3.getBlackPieces()- newBoard3.getWhitePieces();}
                     if(quantifier>max3){
+                        System.out.println(quantifier +"q");
                         max3=quantifier;
+
                     }
 
-
                 }
+
+                System.out.println(max3+" 3");
 
                 if(max3<min2){
                     min2 = max3;
@@ -79,12 +91,17 @@ public class ComPlayer extends Player {
 
             }
 
+
             if(min2==max1){
                 listOfProbableMoves.add(move1);
             }else if(min2>max1) {
                 listOfProbableMoves.clear();
                 listOfProbableMoves.add(move1);
             }
+
+
+
+
         }
 
 
